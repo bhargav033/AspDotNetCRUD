@@ -1,0 +1,6 @@
+@MasterHub_HostAddress = http://localhost:5109
+
+GET {{MasterHub_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

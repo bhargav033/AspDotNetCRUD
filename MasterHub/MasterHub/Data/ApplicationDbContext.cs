@@ -12,5 +12,7 @@ namespace MasterHub.Data
         public DbSet<Auth> User {  get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Catagory> Catagory { get; set; }
+        public DbSet<Team> Team { get; set; }
+        public DbSet<Match> Match { get; set; }
     }
 }
