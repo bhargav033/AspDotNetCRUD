@@ -1,5 +1,7 @@
 ﻿using MasterHub.Data;
+using MasterHub.IServices;
 using MasterHub.Model;
+using MasterHub.ModelDTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +10,7 @@ namespace MasterHub.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LearderboardController(ApplicationDbContext _context) : ControllerBase
+    public class LearderboardController(ApplicationDbContext _context,IMatchService _matchService) : ControllerBase
     {
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LeaderboardItem>>> GetLeaderboard()
@@ -88,6 +90,30 @@ namespace MasterHub.Controllers
 
                 }).ToList();
             return Ok(result);
+        }
+        [HttpPost("AddTeam")]
+        public async Task<IActionResult> AddTeam([FromBody]Team team)
+        {
+            var apiresponse = await _matchService.AddTeam(team);
+            if (apiresponse.Sucess)
+                return Ok("Insert Sucessfully");
+            return BadRequest(apiresponse);
+        }
+        [HttpPost("UpdateMatch")]
+        public async Task<IActionResult> UpdateMatch(int id, [FromBody] Match match)
+        {
+            var apiresponse = await _matchService.UpdateMatch(id,match);
+            if (apiresponse.Sucess)
+                return Ok("Update Sucessfully");
+            return BadRequest(apiresponse);
+        }
+        [HttpPost("UpdateSpecificMatch")]
+        public async Task<IActionResult> UpdateSpecificMatch(int id, [FromBody] MatchPatchDto matchdto)
+        {
+            var apiresponse = await _matchService.UpdateSpecificMatch(id, matchdto);
+            if (apiresponse.Sucess)
+                return Ok("Update Field Sucessfully");
+            return BadRequest(apiresponse);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace MasterHub.Controllers
     public class ProductController(IProductService _productService) : ControllerBase
     {
         [HttpPost("ProductAdd")]
-        public async Task<IActionResult> AddProduct([FromForm]Product product )
+        public async Task<IActionResult> AddProduct([FromForm]Product product)
         {
             var apiresponse = await _productService.AddProductAsync(product, product.File);
             if (apiresponse.Sucess)
